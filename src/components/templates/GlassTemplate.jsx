@@ -239,21 +239,22 @@ export default function GlassTemplate({ portfolio }) {
               {portfolio.certificates.map((c, i) => (
                 <motion.div
                   key={c.id}
+                  className="h-full"
                   variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i}
                 >
-                  <GlassCard className="p-6 hover:bg-white/15 transition-colors duration-300">
-                    <div className="flex items-start gap-3">
+                  <GlassCard className="p-6 h-full flex flex-col hover:bg-white/15 transition-colors duration-300">
+                    <div className="flex items-start gap-3 flex-1">
                       <div className="shrink-0 w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-400/20 flex items-center justify-center">
                         <svg className="w-4 h-4 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                         </svg>
                       </div>
-                      <div className="flex-1 min-w-0">
+                      <div className="flex-1 min-w-0 flex flex-col">
                         <h3 className="font-bold text-white text-sm">{c.title}</h3>
-                        <p className="text-xs text-white/50 mt-0.5">{c.issuer}</p>
+                        <p className="text-xs text-white/50 mt-0.5 flex-1">{c.issuer}</p>
                         {c.fileUrl && (
                           <a href={c.fileUrl} target="_blank" rel="noreferrer"
-                            className="inline-flex items-center gap-1 text-xs text-emerald-300/80 hover:text-emerald-300 mt-2 transition-colors">
+                            className="inline-flex items-center gap-1 text-xs text-emerald-300/80 hover:text-emerald-300 mt-3 transition-colors">
                             View certificate
                             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
