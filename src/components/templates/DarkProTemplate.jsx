@@ -98,9 +98,9 @@ export default function DarkProTemplate({ portfolio }) {
           </section>
         </div>
 
-        <section id="portfolio" className="mt-16 space-y-10">
+        <section id="projects" className="mt-16 space-y-10">
           {portfolio.projects?.length > 0 && (
-            <div>
+            <div id="projects-list">
               <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Portfolio</p>
               <h2 className="mt-3 text-4xl font-bold text-white">Latest work</h2>
               <div className="mt-8 grid gap-6 sm:grid-cols-2">
@@ -116,7 +116,7 @@ export default function DarkProTemplate({ portfolio }) {
           )}
 
           {portfolio.experiences?.length > 0 && (
-            <div>
+            <div id="experience">
               <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Experience</p>
               <h2 className="mt-3 text-4xl font-bold text-white">Professional background</h2>
               <div className="mt-8 space-y-4">
@@ -125,6 +125,61 @@ export default function DarkProTemplate({ portfolio }) {
                     <h3 className="font-semibold text-white">{experience.role}</h3>
                     <p className="mt-2 text-sm text-slate-400">{experience.company}</p>
                     <p className="mt-3 text-sm leading-6 text-slate-400">{experience.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {portfolio.skills?.length > 0 && (
+            <div id="skills">
+              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Skills</p>
+              <h2 className="mt-3 text-4xl font-bold text-white">Technical skills</h2>
+              <div className="mt-8 flex flex-wrap gap-3">
+                {portfolio.skills.map((skill) => (
+                  <span key={skill.id} className="rounded-full border border-gray-700 px-4 py-2 text-sm text-slate-300">
+                    {skill.name}{skill.level ? ` · ${skill.level}` : ''}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {portfolio.certificates?.length > 0 && (
+            <div id="certificates">
+              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Certificates</p>
+              <h2 className="mt-3 text-4xl font-bold text-white">Credentials</h2>
+              <div className="mt-8 grid gap-6 sm:grid-cols-2">
+                {portfolio.certificates.map((certificate) => (
+                  <div key={certificate.id} className="rounded-[1.5rem] border border-gray-900 bg-[#111111]/90 p-6">
+                    <h3 className="font-semibold text-white">{certificate.title}</h3>
+                    <p className="mt-2 text-sm text-slate-400">{certificate.issuer}</p>
+                    {certificate.fileUrl && (
+                      <a href={certificate.fileUrl} target="_blank" rel="noreferrer" className="mt-4 inline-flex rounded-full border border-gray-700 px-4 py-2 text-sm text-slate-200 transition hover:border-orange-500">
+                        View Certificate
+                      </a>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {portfolio.internships?.length > 0 && (
+            <div id="internships">
+              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Internships</p>
+              <h2 className="mt-3 text-4xl font-bold text-white">Internship experience</h2>
+              <div className="mt-8 space-y-4">
+                {portfolio.internships.map((internship) => (
+                  <div key={internship.id} className="rounded-[1.5rem] border border-gray-900 bg-[#111111]/90 p-6">
+                    <h3 className="font-semibold text-white">{internship.role}</h3>
+                    <p className="mt-2 text-sm text-slate-400">{internship.company}</p>
+                    <p className="mt-3 text-sm leading-6 text-slate-400">{internship.description}</p>
+                    {internship.certificateUrl && (
+                      <a href={internship.certificateUrl} target="_blank" rel="noreferrer" className="mt-4 inline-flex rounded-full border border-gray-700 px-4 py-2 text-sm text-slate-200 transition hover:border-orange-500">
+                        View Certificate
+                      </a>
+                    )}
                   </div>
                 ))}
               </div>

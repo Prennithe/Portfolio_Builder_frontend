@@ -13,7 +13,7 @@ export default function GlassTemplate({ portfolio }) {
 
       <main className="max-w-4xl mx-auto px-6 pb-16 space-y-10">
         {portfolio.projects?.length > 0 && (
-          <section>
+          <section id="projects">
             <h2 className="text-xs font-semibold uppercase tracking-widest text-purple-200 mb-4">Projects</h2>
             <div className="grid sm:grid-cols-2 gap-4">
               {portfolio.projects.map((p, i) => (
@@ -33,7 +33,7 @@ export default function GlassTemplate({ portfolio }) {
         )}
 
         {portfolio.skills?.length > 0 && (
-          <section>
+          <section id="skills">
             <h2 className="text-xs font-semibold uppercase tracking-widest text-purple-200 mb-4">Skills</h2>
             <div className="flex flex-wrap gap-2">
               {portfolio.skills.map((s) => (
@@ -46,7 +46,7 @@ export default function GlassTemplate({ portfolio }) {
         )}
 
         {portfolio.experiences?.length > 0 && (
-          <section>
+          <section id="experience">
             <h2 className="text-xs font-semibold uppercase tracking-widest text-purple-200 mb-4">Experience</h2>
             <div className="space-y-4">
               {portfolio.experiences.map((e) => (
@@ -61,7 +61,7 @@ export default function GlassTemplate({ portfolio }) {
         )}
 
         {portfolio.certificates?.length > 0 && (
-          <section>
+          <section id="certificates">
             <h2 className="text-xs font-semibold uppercase tracking-widest text-purple-200 mb-4">Certificates</h2>
             <div className="grid sm:grid-cols-2 gap-4">
               {portfolio.certificates.map((c) => (
@@ -76,7 +76,7 @@ export default function GlassTemplate({ portfolio }) {
         )}
 
         {portfolio.internships?.length > 0 && (
-          <section>
+          <section id="internships">
             <h2 className="text-xs font-semibold uppercase tracking-widest text-purple-200 mb-4">Internships</h2>
             <div className="space-y-4">
               {portfolio.internships.map((item) => (

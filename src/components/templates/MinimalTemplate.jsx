@@ -139,7 +139,7 @@ export default function MinimalTemplate({ portfolio }) {
         )}
 
         {portfolio.certificates?.length > 0 && (
-          <section className="mt-20">
+          <section id="certificates" className="mt-20">
             <div className="mb-8">
               <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Certificates</p>
               <h2 className="mt-3 text-3xl font-bold text-slate-950">Credentials</h2>

@@ -140,6 +140,75 @@ export default function ModernTemplate({ portfolio }) {
           </div>
         </section>
       )}
+
+      {portfolio.experiences?.length > 0 && (
+        <section id="experience" className="bg-slate-800 py-20">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="mb-12 text-center">
+              <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Experience</p>
+              <h2 className="mt-4 text-4xl font-black text-slate-50">Professional background</h2>
+            </div>
+            <div className="space-y-6">
+              {portfolio.experiences.map((experience) => (
+                <div key={experience.id} className="rounded-3xl border border-slate-700 bg-slate-900 p-6">
+                  <h3 className="font-semibold text-slate-50">{experience.role}</h3>
+                  <p className="mt-2 text-sm text-slate-400">{experience.company}</p>
+                  <p className="mt-3 text-sm leading-6 text-slate-400">{experience.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {portfolio.certificates?.length > 0 && (
+        <section id="certificates" className="py-20">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="mb-12 text-center">
+              <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Certificates</p>
+              <h2 className="mt-4 text-4xl font-black text-slate-50">Credentials</h2>
+            </div>
+            <div className="grid gap-6 sm:grid-cols-2">
+              {portfolio.certificates.map((certificate) => (
+                <div key={certificate.id} className="rounded-3xl border border-slate-700 bg-slate-900 p-6">
+                  <h3 className="font-semibold text-slate-50">{certificate.title}</h3>
+                  <p className="mt-2 text-sm text-slate-400">{certificate.issuer}</p>
+                  {certificate.fileUrl && (
+                    <a href={certificate.fileUrl} target="_blank" rel="noreferrer" className="mt-4 inline-flex rounded-full border border-slate-700 px-4 py-2 text-sm text-slate-200 transition hover:bg-slate-800">
+                      View Certificate
+                    </a>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {portfolio.internships?.length > 0 && (
+        <section id="internships" className="bg-slate-800 py-20">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="mb-12 text-center">
+              <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Internships</p>
+              <h2 className="mt-4 text-4xl font-black text-slate-50">Internship experience</h2>
+            </div>
+            <div className="space-y-6">
+              {portfolio.internships.map((internship) => (
+                <div key={internship.id} className="rounded-3xl border border-slate-700 bg-slate-900 p-6">
+                  <h3 className="font-semibold text-slate-50">{internship.role}</h3>
+                  <p className="mt-2 text-sm text-slate-400">{internship.company}</p>
+                  <p className="mt-3 text-sm leading-6 text-slate-400">{internship.description}</p>
+                  {internship.certificateUrl && (
+                    <a href={internship.certificateUrl} target="_blank" rel="noreferrer" className="mt-4 inline-flex rounded-full border border-slate-700 px-4 py-2 text-sm text-slate-200 transition hover:bg-slate-800">
+                      View Certificate
+                    </a>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </div>
   )
 }

@@ -39,6 +39,13 @@ export default function Dashboard() {
     navigate('/login')
   }
 
+  const handleSidebarClick = (sectionId) => {
+    setActiveSection(sectionId)
+    setTimeout(() => {
+      document.getElementById(`section-${sectionId}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 50)
+  }
+
   const handleTemplateUpdate = (selectedTemplate) => {
     setPortfolio((prev) => ({ ...prev, selectedTemplate }))
   }
@@ -76,7 +83,7 @@ export default function Dashboard() {
             {SECTIONS.map((section) => (
               <button
                 key={section.id}
-                onClick={() => setActiveSection(section.id)}
+                onClick={() => handleSidebarClick(section.id)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
                   activeSection === section.id
                     ? 'bg-indigo-600 dark:bg-indigo-600 bg-blue-600 text-white shadow-lg shadow-indigo-500/25 dark:shadow-indigo-500/25 shadow-blue-500/25'
@@ -237,7 +244,7 @@ export default function Dashboard() {
               {SECTIONS.map((section) => (
                 <button
                   key={section.id}
-                  onClick={() => setActiveSection(section.id)}
+                  onClick={() => handleSidebarClick(section.id)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg whitespace-nowrap transition font-medium ${
                     activeSection === section.id
                       ? 'bg-indigo-600 dark:bg-indigo-600 bg-blue-600 text-white'
@@ -257,7 +264,7 @@ export default function Dashboard() {
               {SECTIONS.map((section) => (
                 <button
                   key={section.id}
-                  onClick={() => setActiveSection(section.id)}
+                  onClick={() => handleSidebarClick(section.id)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-t-lg transition font-medium ${
                     activeSection === section.id
                       ? 'bg-indigo-600 dark:bg-indigo-600 bg-blue-600 text-white border-b-2 border-white'
@@ -282,6 +289,7 @@ export default function Dashboard() {
             {/* Active Section Manager */}
             <motion.div
               key={activeSection}
+              id={`section-${activeSection}`}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2 }}
