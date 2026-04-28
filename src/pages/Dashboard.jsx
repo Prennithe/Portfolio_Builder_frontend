@@ -24,6 +24,7 @@ export default function Dashboard() {
   const [portfolio, setPortfolio] = useState(null)
   const [loading, setLoading] = useState(true)
   const [activeSection, setActiveSection] = useState('projects')
+  const [copied, setCopied] = useState(false)
   const username = localStorage.getItem('username')
   const { isDark, toggleTheme } = useTheme()
 
@@ -49,6 +50,14 @@ export default function Dashboard() {
     setTimeout(() => {
       document.getElementById(`section-${sectionId}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }, 50)
+  }
+
+  const portfolioLink = `http://localhost:5173/portfolio/${username}`
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(portfolioLink)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
   }
 
   const handleTemplateUpdate = (selectedTemplate) => {
@@ -198,55 +207,102 @@ export default function Dashboard() {
         {/* Page content */}
         <main className="flex-1 p-4 md:p-6 space-y-6">
 
-          {/* ── Welcome card ── */}
+          {/* ── Welcome card (full width) ── */}
           <motion.div
             variants={fadeUp} initial="hidden" animate="visible" custom={0}
-            className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-sm"
+            className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-5 shadow-sm"
           >
-            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-              <div>
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-1">
-                  Welcome back, {portfolio?.username}! 👋
-                </h2>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-5">{portfolio?.email}</p>
+            <h2 className="text-base font-semibold text-gray-900 dark:text-white">
+              Welcome back, {portfolio?.username}! 👋
+            </h2>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 mb-4">{portfolio?.email}</p>
+            <div className="flex flex-wrap gap-2">
+              {SECTIONS.map((section) => (
+                <button
+                  key={section.id}
+                  onClick={() => handleSidebarClick(section.id)}
+                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-indigo-400 dark:hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 transition-all duration-200 group"
+                >
+                  <span className="w-4 h-4 rounded bg-indigo-100 dark:bg-indigo-500/20 flex items-center justify-center">
+                    <svg className="w-2.5 h-2.5 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={section.icon} />
+                    </svg>
+                  </span>
+                  <span className="text-xs text-gray-600 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                    {section.label}
+                  </span>
+                  <span className="text-xs font-bold text-gray-900 dark:text-white">
+                    {portfolio?.[section.id]?.length || 0}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </motion.div>
 
-                {/* Stats row */}
-                <div className="flex flex-wrap gap-3">
-                  {SECTIONS.map((section) => (
-                    <button
-                      key={section.id}
-                      onClick={() => handleSidebarClick(section.id)}
-                      className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-indigo-400 dark:hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 transition-all duration-200 group"
-                    >
-                      <span className="w-5 h-5 rounded-md bg-indigo-100 dark:bg-indigo-500/20 flex items-center justify-center">
-                        <svg className="w-3 h-3 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={section.icon} />
-                        </svg>
-                      </span>
-                      <span className="text-xs text-gray-600 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                        {section.label}
-                      </span>
-                      <span className="text-xs font-bold text-gray-900 dark:text-white">
-                        {portfolio?.[section.id]?.length || 0}
-                      </span>
-                    </button>
-                  ))}
+          {/* ── Active Template + Portfolio Link (2-col) ── */}
+          <motion.div
+            variants={fadeUp} initial="hidden" animate="visible" custom={1}
+            className="grid grid-cols-1 md:grid-cols-2 gap-4"
+          >
+            {/* Active Template */}
+            <div className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-500/10 dark:to-purple-500/10 border border-indigo-200 dark:border-indigo-500/30 rounded-2xl p-5 shadow-sm">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-7 h-7 rounded-lg bg-indigo-100 dark:bg-indigo-500/20 flex items-center justify-center">
+                  <svg className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" />
+                  </svg>
                 </div>
+                <p className="text-xs font-semibold uppercase tracking-widest text-indigo-500 dark:text-indigo-400">Active Template</p>
               </div>
+              <p className="text-xl font-bold text-gray-900 dark:text-white">
+                {TEMPLATES.find(t => t.value === portfolio?.selectedTemplate)?.label || 'Minimal'}
+              </p>
+              <p className="text-xs text-indigo-400 dark:text-indigo-500 mt-1">Currently selected</p>
+            </div>
 
-              {/* Active template badge */}
-              <div className="shrink-0 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-500/10 dark:to-purple-500/10 border border-indigo-200 dark:border-indigo-500/30 rounded-2xl px-5 py-4 min-w-[180px]">
-                <p className="text-xs font-semibold uppercase tracking-widest text-indigo-500 dark:text-indigo-400 mb-1">Active Template</p>
-                <p className="text-base font-bold text-gray-900 dark:text-white">
-                  {TEMPLATES.find(t => t.value === portfolio?.selectedTemplate)?.label || 'Minimal'}
-                </p>
+            {/* Portfolio Link */}
+            <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-5 shadow-sm">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-7 h-7 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                  <svg className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                  </svg>
+                </div>
+                <p className="text-xs font-semibold uppercase tracking-widest text-gray-500 dark:text-gray-400">Portfolio Link</p>
               </div>
+              <p className="text-xs text-gray-400 dark:text-gray-500 font-mono break-all leading-relaxed mb-3">
+                {portfolioLink}
+              </p>
+              <button
+                onClick={handleCopyLink}
+                className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-all duration-200 ${
+                  copied
+                    ? 'bg-green-100 dark:bg-green-500/15 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-500/30'
+                    : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-sm shadow-indigo-500/20'
+                }`}
+              >
+                {copied ? (
+                  <>
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Copied!
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                    Copy Link
+                  </>
+                )}
+              </button>
             </div>
           </motion.div>
 
           {/* ── Template selector card ── */}
           <motion.div
-            variants={fadeUp} initial="hidden" animate="visible" custom={1}
+            variants={fadeUp} initial="hidden" animate="visible" custom={2}
             className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-sm"
           >
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
@@ -267,7 +323,7 @@ export default function Dashboard() {
 
           {/* ── Portfolio details card ── */}
           <motion.div
-            variants={fadeUp} initial="hidden" animate="visible" custom={2}
+            variants={fadeUp} initial="hidden" animate="visible" custom={3}
             className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-sm overflow-hidden"
           >
             {/* Card header */}
