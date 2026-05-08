@@ -39,58 +39,65 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 bg-gradient-to-br from-blue-50 via-white to-blue-50 px-4 relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10 dark:opacity-10 opacity-5">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(99,102,241,0.1),transparent_50%)] dark:bg-[radial-gradient(circle_at_50%_50%,rgba(99,102,241,0.1),transparent_50%)] bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.05),transparent_50%)]" />
-        <div className="absolute top-10 left-10 w-32 h-32 bg-indigo-500/5 dark:bg-indigo-500/5 bg-blue-500/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 right-10 w-40 h-40 bg-purple-500/5 dark:bg-purple-500/5 bg-indigo-500/5 rounded-full blur-3xl" />
+    <div className="min-h-screen flex items-center justify-center bg-gray-950 px-4 relative overflow-hidden">
+
+      {/* Ambient background blobs — same style as dashboard cards' gradient badge */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-[-10%] left-[-5%] w-72 h-72 bg-indigo-600/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-[-10%] right-[-5%] w-80 h-80 bg-purple-600/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl" />
       </div>
 
       <motion.div
-        initial={{ opacity: 0, y: 24 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="w-full max-w-md bg-gray-900/90 dark:bg-gray-900/90 bg-white/90 backdrop-blur-xl border border-gray-800/50 dark:border-gray-800/50 border-gray-200/50 rounded-2xl p-8 shadow-2xl relative z-10"
+        transition={{ duration: 0.35, ease: 'easeOut' }}
+        className="w-full max-w-md bg-gray-900 border border-gray-800 rounded-2xl p-8 shadow-xl shadow-black/40 relative z-10"
       >
+
+        {/* ── Header ── */}
         <div className="mb-8 text-center">
           <motion.div
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.3 }}
-            className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 dark:from-indigo-500 dark:to-purple-600 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl mx-auto mb-4 flex items-center justify-center"
+            initial={{ scale: 0.85, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.15, duration: 0.3, ease: 'easeOut' }}
+            className="w-14 h-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl mx-auto mb-4 flex items-center justify-center shadow-md shadow-indigo-500/20"
           >
-            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
             </svg>
           </motion.div>
-          <h1 className="text-3xl font-bold text-white dark:text-white text-gray-900">Portfolio Builder</h1>
-          <p className="text-gray-400 dark:text-gray-400 text-gray-600 mt-2 text-sm">
+          <h1 className="text-2xl font-bold text-white">Portfolio Builder</h1>
+          <p className="text-gray-400 mt-1.5 text-sm">
             {isRegister ? 'Create your account' : 'Sign in to your account'}
           </p>
         </div>
 
+        {/* ── Form ── */}
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="relative">
-            <label className="block text-sm text-gray-400 dark:text-gray-400 text-gray-600 mb-1">Username</label>
+
+          {/* Username */}
+          <div>
+            <label className="block text-xs font-medium text-gray-400 mb-1.5">Username</label>
             <div className="relative">
               <input
                 name="username"
                 value={form.username}
                 onChange={handleChange}
                 required
-                className="w-full bg-gray-800/50 dark:bg-gray-800/50 bg-gray-100 border border-gray-700/50 dark:border-gray-700/50 border-gray-300/50 rounded-lg px-4 py-2.5 pl-10 text-white dark:text-white text-gray-900 placeholder-gray-500 dark:placeholder-gray-500 placeholder-gray-400 focus:outline-none focus:border-indigo-500 dark:focus:border-indigo-500 focus:border-blue-500 focus:bg-gray-800/70 dark:focus:bg-gray-800/70 focus:bg-gray-50 transition-all duration-200"
                 placeholder="johndoe"
+                className="w-full bg-gray-800/60 border border-gray-700 rounded-xl px-4 py-2.5 pl-10 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 transition-all duration-200"
               />
-              <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500 dark:text-gray-500 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
             </div>
           </div>
 
+          {/* Email — register only */}
           {isRegister && (
-            <div className="relative">
-              <label className="block text-sm text-gray-400 dark:text-gray-400 text-gray-600 mb-1">Email</label>
+            <div>
+              <label className="block text-xs font-medium text-gray-400 mb-1.5">Email</label>
               <div className="relative">
                 <input
                   name="email"
@@ -98,18 +105,19 @@ export default function Login() {
                   value={form.email}
                   onChange={handleChange}
                   required
-                  className="w-full bg-gray-800/50 dark:bg-gray-800/50 bg-gray-100 border border-gray-700/50 dark:border-gray-700/50 border-gray-300/50 rounded-lg px-4 py-2.5 pl-10 text-white dark:text-white text-gray-900 placeholder-gray-500 dark:placeholder-gray-500 placeholder-gray-400 focus:outline-none focus:border-indigo-500 dark:focus:border-indigo-500 focus:border-blue-500 focus:bg-gray-800/70 dark:focus:bg-gray-800/70 focus:bg-gray-50 transition-all duration-200"
                   placeholder="john@example.com"
+                  className="w-full bg-gray-800/60 border border-gray-700 rounded-xl px-4 py-2.5 pl-10 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 transition-all duration-200"
                 />
-                <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500 dark:text-gray-500 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
             </div>
           )}
 
-          <div className="relative">
-            <label className="block text-sm text-gray-400 dark:text-gray-400 text-gray-600 mb-1">Password</label>
+          {/* Password */}
+          <div>
+            <label className="block text-xs font-medium text-gray-400 mb-1.5">Password</label>
             <div className="relative">
               <input
                 name="password"
@@ -117,16 +125,16 @@ export default function Login() {
                 value={form.password}
                 onChange={handleChange}
                 required
-                className="w-full bg-gray-800/50 dark:bg-gray-800/50 bg-gray-100 border border-gray-700/50 dark:border-gray-700/50 border-gray-300/50 rounded-lg px-4 py-2.5 pl-10 pr-10 text-white dark:text-white text-gray-900 placeholder-gray-500 dark:placeholder-gray-500 placeholder-gray-400 focus:outline-none focus:border-indigo-500 dark:focus:border-indigo-500 focus:border-blue-500 focus:bg-gray-800/70 dark:focus:bg-gray-800/70 focus:bg-gray-50 transition-all duration-200"
                 placeholder="••••••••"
+                className="w-full bg-gray-800/60 border border-gray-700 rounded-xl px-4 py-2.5 pl-10 pr-10 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 transition-all duration-200"
               />
-              <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500 dark:text-gray-500 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-500 text-gray-400 hover:text-gray-400 dark:hover:text-gray-400 hover:text-gray-600 transition"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors duration-200"
               >
                 {showPassword ? (
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -142,25 +150,28 @@ export default function Login() {
             </div>
           </div>
 
+          {/* Error */}
           {error && (
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="text-red-400 dark:text-red-400 text-red-600 text-sm bg-red-900/20 dark:bg-red-900/20 bg-red-50 border border-red-800/50 dark:border-red-800/50 border-red-200/50 rounded-lg px-3 py-2 flex items-center gap-2"
+              transition={{ duration: 0.2 }}
+              className="flex items-center gap-2 text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl px-3 py-2.5"
             >
-              <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               {error}
             </motion.div>
           )}
 
+          {/* Submit */}
           <motion.button
             type="submit"
             disabled={loading}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-600 dark:to-purple-600 from-blue-600 to-indigo-600 hover:from-indigo-500 hover:to-purple-500 dark:hover:from-indigo-500 dark:hover:to-purple-500 hover:from-blue-500 hover:to-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-2.5 rounded-lg transition-all duration-200 flex items-center justify-center gap-2"
+            className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-semibold py-2.5 rounded-xl shadow-md shadow-indigo-500/20 transition-all duration-200 flex items-center justify-center gap-2"
           >
             {loading ? (
               <>
@@ -178,15 +189,17 @@ export default function Login() {
           </motion.button>
         </form>
 
-        <p className="text-center text-sm text-gray-500 dark:text-gray-500 text-gray-400 mt-6">
+        {/* ── Toggle login / register ── */}
+        <p className="text-center text-sm text-gray-500 mt-6">
           {isRegister ? 'Already have an account?' : "Don't have an account?"}{' '}
           <button
             onClick={() => { setIsRegister(!isRegister); setError('') }}
-            className="text-indigo-400 dark:text-indigo-400 text-blue-600 hover:text-indigo-300 dark:hover:text-indigo-300 hover:text-blue-500 font-medium transition"
+            className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors duration-200"
           >
             {isRegister ? 'Sign In' : 'Register'}
           </button>
         </p>
+
       </motion.div>
     </div>
   )

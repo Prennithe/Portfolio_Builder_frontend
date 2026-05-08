@@ -24,6 +24,7 @@ export default function Dashboard() {
   const [portfolio, setPortfolio] = useState(null)
   const [loading, setLoading] = useState(true)
   const [activeSection, setActiveSection] = useState('projects')
+  const [copied, setCopied] = useState(false)
   const username = localStorage.getItem('username')
   const { isDark, toggleTheme } = useTheme()
 
@@ -265,9 +266,59 @@ export default function Dashboard() {
             />
           </motion.div>
 
-          {/* ── Portfolio details card ── */}
+          {/* ── Portfolio Link card ── */}
           <motion.div
             variants={fadeUp} initial="hidden" animate="visible" custom={2}
+            className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-sm"
+          >
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Your Portfolio Link</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
+                  Share this link — it reflects your active{' '}
+                  <span className="font-medium text-indigo-600 dark:text-indigo-400">
+                    {TEMPLATES.find(t => t.value === portfolio?.selectedTemplate)?.label || 'Minimal'}
+                  </span>{' '}template.
+                </p>
+              </div>
+              <Link
+                to={`/portfolio/${username}`}
+                target="_blank"
+                className="shrink-0 inline-flex items-center gap-1.5 text-xs font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 px-3 py-1.5 rounded-lg hover:bg-indigo-50 dark:hover:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/30 transition-all duration-200"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+                Open
+              </Link>
+            </div>
+            <div className="flex items-center gap-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3">
+              <svg className="w-4 h-4 shrink-0 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+              </svg>
+              <span className="flex-1 text-sm text-gray-700 dark:text-gray-300 font-mono truncate">
+                {window.location.origin}/portfolio/{username}
+              </span>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(`${window.location.origin}/portfolio/${username}`)
+                  setCopied(true)
+                  setTimeout(() => setCopied(false), 2000)
+                }}
+                className={`shrink-0 text-xs font-semibold px-3 py-1.5 rounded-lg transition-all duration-200 ${
+                  copied
+                    ? 'bg-green-100 dark:bg-green-500/20 text-green-700 dark:text-green-400'
+                    : 'bg-indigo-100 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-400 hover:bg-indigo-200 dark:hover:bg-indigo-500/30'
+                }`}
+              >
+                {copied ? 'Copied!' : 'Copy Link'}
+              </button>
+            </div>
+          </motion.div>
+
+          {/* ── Portfolio details card ── */}
+          <motion.div
+            variants={fadeUp} initial="hidden" animate="visible" custom={3}
             className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-sm overflow-hidden"
           >
             {/* Card header */}
